@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from 'next/image';
 import CredentialsSignInForm from "./credentials-signin-form";
 import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
+import { redirect } from 'next/navigation' ;
 
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ const SignInPage = async () => {
     const session = await auth();
 
     if (session) { 
-        return redirect('/')
+        return redirect('/');
     }
 
     return <div className="w-full max-w-md mx-auto">
@@ -29,7 +29,7 @@ const SignInPage = async () => {
                     Sign In
                 </CardTitle>
                 <CardDescription className="text-center">
-                    Sign in to your account
+                    Sign in to your account                    
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

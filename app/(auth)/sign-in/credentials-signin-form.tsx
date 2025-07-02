@@ -1,68 +1,72 @@
 'use client';
 
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { signInDefualtValues } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
-import Link  from "next/link";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { signInDefualtValues } from "@/lib/constants";
+import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { signInWithCredentials } from "@/lib/actions/user.actions";
 
-const CredentialsSignInForm = () => {
-    const [data, actions] = useActionState(signInWithCredentials, {
+const CredentialSignInForm = () => {
+    const [data, action] = useActionState(signInWithCredentials, {
         success: false,
-        message: ''
+        message: '',
     });
 
     const SignInButton = () => {
-        const {pending} = useFormStatus();
+        const { pending } = useFormStatus();
 
         return (
-            <Button disabled={pending} className="w-full" variant='default'>
-                {pending? 'Signing In...' : 'Sign In'}
+            <Button disabled={ pending} className='w-full' variant='default'>
+                { pending? 'Signing in...' : 'Sign in'}
             </Button>
         )
     }
 
-    return <form action={actions}>
-        <div className="space-y-6">
+    return (<form action={action}>
+        <div className='space-y-6'>
             <div>
                 <Label htmlFor='email'>Email</Label>
-                <Input id="email"
-                    name="email"
-                    type="email"
+                <Input 
+                    id='email'
+                    name='email'
+                    type='email'
                     required
-                    autoComplete="email"
-                    defaultValue={signInDefualtValues.email} />
+                    autoComplete='email'
+                    defaultValue={signInDefualtValues.email}
+                />
             </div>
+
             <div>
                 <Label htmlFor='password'>Password</Label>
-                <Input id="password"
-                    name="password"
-                    type="password"
+                <Input 
+                    id='password'
+                    name='password'
+                    type='password'
                     required
-                    autoComplete="password"
-                    defaultValue={signInDefualtValues.password} />
+                    autoComplete='password'
+                    defaultValue={signInDefualtValues.password}
+                />
             </div>
             <div>
                 <SignInButton/>
             </div>
 
             {data && !data.success && (
-                <div className="text-center text-destructive">
-                    {data.message}
-                </div>
+                <div className="text-center text_destructive">{data.message}</div>
             )}
 
-            <div className="text-sm text-center text-muted-forground">
+            <div className="test-sm text-center text-muted-foreground">
                 Don&apos;t have an account?{' '}
-                <Link href="/sign-up" target="_self" className="link">
+                <Link href='/sign-up' target='_self' className='link'>
                     Sign Up
                 </Link>
             </div>
         </div>
-    </form>;
-};
+    </form>
+    );
+}
 
-export default CredentialsSignInForm;
+export default CredentialSignInForm;
