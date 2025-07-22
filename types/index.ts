@@ -1,8 +1,10 @@
-import {z} from 'zod';
-import { insertProductSchema } from '@/lib/validators';
+import { number, z } from "zod";
+import { insterProductSchema } from "@/lib/validators";
+import { Rationale } from "next/font/google";
 
-export type Product = z.infer<typeof insertProductSchema> &{ 
-    id: string;
-    rating: number;
-    createdAt: Date;
+export type Product = z.infer<typeof insterProductSchema> & {
+  id: string;
+  rating: string;
+  numReviews: number;
+  createdAt: Date;
 };

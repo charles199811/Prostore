@@ -4,7 +4,7 @@ CREATE TABLE "Product" (
     "name" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
     "category" TEXT NOT NULL,
-    "image" TEXT[],
+    "images" TEXT[],
     "brand" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "stock" INTEGER NOT NULL,
@@ -13,10 +13,10 @@ CREATE TABLE "Product" (
     "numReviews" INTEGER NOT NULL DEFAULT 0,
     "isFeatured" BOOLEAN NOT NULL DEFAULT false,
     "banner" TEXT,
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "products_slug_idx" ON "Product"("slug");
+CREATE UNIQUE INDEX "product_slug_idx" ON "Product"("slug");
