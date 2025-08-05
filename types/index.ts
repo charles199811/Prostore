@@ -1,5 +1,9 @@
 import { number, z } from "zod";
-import { insterProductSchema } from "@/lib/validators";
+import {
+  insterProductSchema,
+  insertCartSchema,
+  cartItemSchema,
+} from "@/lib/validators";
 import { Rationale } from "next/font/google";
 
 export type Product = z.infer<typeof insterProductSchema> & {
@@ -8,3 +12,6 @@ export type Product = z.infer<typeof insterProductSchema> & {
   numReviews: number;
   createdAt: Date;
 };
+
+export type Cart = z.infer<typeof insertCartSchema>;
+export type CartItem = z.infer<typeof cartItemSchema>;
