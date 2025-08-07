@@ -27,7 +27,7 @@ export async function addItemToCart(data: CartItem) {
     const product = await prisma.product.findFirst({
       where: { id: item.productId },
     });
-    
+
     //Testing
     console.log({
       "session Cart Id": sessionCartId,
