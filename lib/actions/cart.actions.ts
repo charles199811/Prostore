@@ -6,18 +6,19 @@ import { converToPlainObject, formatError, round2 } from "../utils";
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
 import { cartItemSchema, insertCartSchema } from "../validators";
+import { revalidatePath } from "next/cache";
 
 //Calculate cart price
 const calcPrice = (items: CartItem[]) => {
-  const itemPrice = round2(
+  const itemsPrice = round2(
       items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0)
     ),
-    shippingPrice = round2(itemPrice > 100 ? 0 : 10),
-    taxPrice = round2(0.15 * itemPrice),
-    totalPrice = round2(itemPrice + taxPrice + shippingPrice);
+    shippingPrice = round2(itemsPrice > 100 ? 0 : 10),
+    taxPrice = round2(0.15 * itemsPrice),
+    totalPrice = round2(itemsPrice + taxPrice + shippingPrice);
 
   return {
-    itemPrice: itemPrice.toFixed(2),
+    itemsPrice: itemsPrice.toFixed(2),
     shippingPrice: shippingPrice.toFixed(2),
     taxPrice: taxPrice.toFixed(2),
     totalPrice: totalPrice.toFixed(2),
@@ -55,15 +56,19 @@ export async function addItemToCart(data: CartItem) {
         ...calcPrice([item]),
       });
 
-      //Testing
-      console.log(newCart);
-      //stopped in 11.23 min. product details are not reciving in console.log
-    }
+      //Add to database
+      await prisma.cart.create({
+        data: newCart,
+      });
 
-    return {
-      success: true,
-      message: "Item added to cart",
-    };
+      //Revalidate product page
+      revalidatePath(`/product/${product.slug}`);
+
+      return {
+        success: true,
+        message: "Item added to cart",
+      };
+    }
   } catch (error) {
     return {
       success: false,
@@ -92,7 +97,7 @@ export async function getMyCart() {
   return converToPlainObject({
     ...cart,
     items: cart.items as CartItem[],
-    itemPrice: cart.itemPrice.toString(),
+    itemPrice: cart.itemsPrice.toString(),
     totalPrice: cart.totalPrice.toString(),
     shippingPrice: cart.shippingPrice.toString(),
     taxPrice: cart.taxPrice.toString(),
