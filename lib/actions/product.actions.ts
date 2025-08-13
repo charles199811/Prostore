@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@/db/prisma';
-import { convertToPlanObject } from '../utils';
+import { converToPlainObject } from '../utils';
 import { LATEST_PRODUCTS_LIMIT } from '../constants';
 
 //get latest products
@@ -12,7 +12,7 @@ export async function getLatestProduct() {
         orderBy: {createdAt: 'desc'}
     });
     
-    return convertToPlanObject(data);
+    return converToPlainObject(data);
 }
 
 //get single product by slug

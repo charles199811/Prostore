@@ -1,13 +1,12 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { number } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// Convert prisma object in to a regular JS object
-export function convertToPlanObject<T>(value: T): T {
+//convert prisma object in to regular JS object
+export function converToPlainObject<T>(value: T): T {
   return JSON.parse(JSON.stringify(value));
 }
 
@@ -17,10 +16,7 @@ export function formatNumberWithDecimal(num: number): string {
   return decimal ? `${int}.${decimal.padEnd(2, "0")}` : `${int}.00`;
 }
 
-//convert prisma object in to regular JS object
-export function converToPlainObject<T>(value: T): T {
-  return JSON.parse(JSON.stringify(value));
-}
+
 
 //Format errors
 /// eslint-disable-next-line @typescript-eslint/no-explicit-any
