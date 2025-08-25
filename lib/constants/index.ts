@@ -17,3 +17,11 @@ export const signUpDefaultValues = {
   password: "",
   confirmPassword: "",
 };
+
+export const shippingAddressDefultValues = {
+  fullName: "John Doe",
+  streetAddress: "123 Main st",
+  city: "hemel",
+  postalCode: "12345",
+  country: "UK",
+};
