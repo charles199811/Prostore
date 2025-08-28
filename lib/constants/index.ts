@@ -19,9 +19,9 @@ export const signUpDefaultValues = {
 };
 
 export const shippingAddressDefultValues = {
-  fullName: "John Doe",
-  streetAddress: "123 Main st",
-  city: "hemel",
-  postalCode: "12345",
-  country: "UK",
+  fullName: "",
+  streetAddress: "",
+  city: "",
+  postalCode: "",
+  country: "",
 };
