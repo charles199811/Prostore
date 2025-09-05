@@ -47,7 +47,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
         });
       }
 
-      router.push("/payment-method")
+      router.push("/payment-method");
     });
   };
 
