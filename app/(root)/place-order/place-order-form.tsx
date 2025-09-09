@@ -21,16 +21,23 @@ const PlaceOrderForm = () => {
 
   const PlaceOrderButton = () => {
     const { pending } = useFormStatus();
-    <Button disabled={pending} className="w-full">
-      {pending ? (
-        <Loader className="w-4 h-4 animate-spin" />
-      ) : (
-        <Check className="w-4 h-4" />
-      )}
-    </Button>;
+    return (
+      <Button disabled={pending} className="w-full">
+        {pending ? (
+          <Loader className="w-4 h-4 animate-spin" />
+        ) : (
+          <Check className="w-4 h-4" />
+        )}{" "}
+        Place Order
+      </Button>
+    );
   };
 
-  return <form onSubmit={handleSubmit} className="w-full"></form>;
+  return (
+    <form onSubmit={handleSubmit} className="w-full">
+      <PlaceOrderButton />
+    </form>
+  );
 };
 
 export default PlaceOrderForm;
