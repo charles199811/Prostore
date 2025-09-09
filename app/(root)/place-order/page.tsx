@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import { formatCurreny } from "@/lib/utils";
+import PlaceOrderForm from "./place-order-form";
 
 export const metadata: Metadata = {
   title: "Place Order",
@@ -114,27 +115,28 @@ const PlaceOrderPage = async () => {
           </Card>
         </div>
         <Card>
-            <CardContent className="p-4 gap-4 space-y-4">
-                <div className="flex justify-between">
-                    <div>Items</div>
-                    <div> { formatCurreny(cart.itemsPrice) } </div>
-                </div>
+          <CardContent className="p-4 gap-4 space-y-4">
+            <div className="flex justify-between">
+              <div>Items</div>
+              <div> {formatCurreny(cart.itemsPrice)} </div>
+            </div>
 
-                <div className="flex justify-between">
-                    <div>Tax</div>
-                    <div> { formatCurreny(cart.taxPrice) } </div>
-                </div>
+            <div className="flex justify-between">
+              <div>Tax</div>
+              <div> {formatCurreny(cart.taxPrice)} </div>
+            </div>
 
-                <div className="flex justify-between">
-                    <div>Shipping</div>
-                    <div> { formatCurreny(cart.shippingPrice) } </div>
-                </div>
+            <div className="flex justify-between">
+              <div>Shipping</div>
+              <div> {formatCurreny(cart.shippingPrice)} </div>
+            </div>
 
-                <div className="flex justify-between">
-                    <div>Total</div>
-                    <div> { formatCurreny(cart.totalPrice) } </div>
-                </div>
-            </CardContent>
+            <div className="flex justify-between">
+              <div>Total</div>
+              <div> {formatCurreny(cart.totalPrice)} </div>
+            </div>
+            <PlaceOrderForm />
+          </CardContent>
         </Card>
       </div>
     </>
