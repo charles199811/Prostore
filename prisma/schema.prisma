@@ -117,7 +117,7 @@ model Order {
   deliveredAt     DateTime?   @db.Timestamp(6)
   createdAt       DateTime    @default(now()) @db.Timestamp(6)
   user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orderitems       OrderItem[]
+  orderitems      OrderItem[]
 }
 
 model OrderItem {
@@ -128,8 +128,8 @@ model OrderItem {
   name      String
   slug      String
   image     String
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   //combine the order id and product id and creade a new UUID(primary_key)
   @@id([orderId, productId], map: "orderitems_orderId_ProdcutId_pk")
