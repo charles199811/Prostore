@@ -48,6 +48,7 @@ const OrderDetailsTable = ({
     deliveredAt,
   } = order;
 
+  
   const { toast } = useToast();
 
   const PrintLoadingState = () => {
