@@ -14,6 +14,7 @@ import { formatError } from "../utils";
 import { ShippingAddress } from "@/types";
 import z from "zod";
 import { _success } from "zod/v4/core";
+import { fa, tr } from "zod/v4/locales";
 
 //Sign in the user with credentials
 export async function signInWithCredentials(
@@ -136,6 +137,41 @@ export async function updateUserPaymentMethod(
       success: true,
       message: "User updated successfully",
     };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+//Update the user profile
+type UserProps = {
+  name: string;
+  email: string;
+};
+
+export async function updateProfile(user: UserProps) {
+  try {
+    const session = await auth();
+
+    const currentUser = await prisma.user.findFirst({
+      where: {
+        id: session?.user?.id,
+      },
+    });
+    if (!currentUser) throw new Error("User not found");
+
+    await prisma.user.update({
+      where: {
+        id: currentUser.id,
+      },
+      data: {
+        name: user.name
+      }
+    });
+
+    return {
+      success: true,
+      message: "User updated successfully"
+    }
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
