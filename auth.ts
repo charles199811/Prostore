@@ -100,12 +100,17 @@ export const config = {
               });
               //Asign new cart
               await prisma.cart.update({
-                where: { id: sessionCart.id},
-                data: {userId: user.id}
-              })
+                where: { id: sessionCart.id },
+                data: { userId: user.id },
+              });
             }
           }
         }
+      }
+
+      //Handle session updates
+      if (session?.user.name && trigger === "update") {
+        token.name = session.user.name;
       }
 
       return token;
