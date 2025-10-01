@@ -26,11 +26,6 @@ export default function AdminLayout({
             <MainNav className="mx-6" />
             <div className="ml-auto items-center flex space-x-4">
               <Menu />
-              <Input
-                type="search"
-                placeholder="Search..."
-                className="md:w-[100] lg:w-[300]"
-              />
             </div>
           </div>
         </div>
