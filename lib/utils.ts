@@ -7,6 +7,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+//Formar Number
+const NUMBER_FORMATTER = new Intl.NumberFormat("en-US");
+export function formatNumber(number: number){
+  return NUMBER_FORMATTER.format(number); 
+}
+
 //convert prisma object in to regular JS object
 export function converToPlainObject<T>(value: T): T {
   return JSON.parse(JSON.stringify(value));
