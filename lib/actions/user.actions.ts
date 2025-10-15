@@ -14,7 +14,6 @@ import { formatError } from "../utils";
 import { ShippingAddress } from "@/types";
 import z from "zod";
 import { _success } from "zod/v4/core";
-import { fa, tr } from "zod/v4/locales";
 
 //Sign in the user with credentials
 export async function signInWithCredentials(
