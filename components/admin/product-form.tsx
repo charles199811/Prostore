@@ -281,8 +281,8 @@ const ProductForm = ({
                           onUploadError={(error: Error) => {
                             toast({
                               variant: "destructive",
-                              description: `ERROR! ${error.message}`
-                            })
+                              description: `ERROR! ${error.message}`,
+                            });
                           }}
                         />
                       </FormControl>
@@ -300,16 +300,20 @@ const ProductForm = ({
           <Card>
             <CardContent className="space-y-2 mt-2">
               <FormField
-              control={ form.control}
-              name="isFeatured"
-              render={({field}) => (
-                <FormItem className="space-x-2 items-center">
-                  <FormControl>
-                    <Checkbox checked={ field.value } onCheckedChange={field.onChange}/>
-                  </FormControl>
-                  <FormLabel>Is Feartured</FormLabel>
-                </FormItem>
-              )}/>
+                control={form.control}
+                name="isFeatured"
+                render={({ field }) => (
+                  <FormItem className="space-x-2 items-center">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel>Is Feartured</FormLabel>
+                  </FormItem>
+                )}
+              />
               {isFeatured && banner && (
                 <Image
                   src={banner}
@@ -317,21 +321,21 @@ const ProductForm = ({
                   className="w-full object-cover object-center rounded-sm"
                   width={1920}
                   height={680}
-                  />
+                />
               )}
               {isFeatured && !banner && (
-               <UploadButton
-                          endpoint="imageUploader"
-                          onClientUploadComplete={(res: { url: string }[]) => {
-                            form.setValue("banner", res[0].url);
-                          }}
-                          onUploadError={(error: Error) => {
-                            toast({
-                              variant: "destructive",
-                              description: `ERROR! ${error.message}`
-                            })
-                          }}
-                        />
+                <UploadButton
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res: { url: string }[]) => {
+                    form.setValue("banner", res[0].url);
+                  }}
+                  onUploadError={(error: Error) => {
+                    toast({
+                      variant: "destructive",
+                      description: `ERROR! ${error.message}`,
+                    });
+                  }}
+                />
               )}
             </CardContent>
           </Card>
