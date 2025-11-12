@@ -15,6 +15,7 @@ import { ShippingAddress } from "@/types";
 import z from "zod";
 import { _success } from "zod/v4/core";
 import { PAGE_SIZE } from "../constants";
+import { revalidatePath } from "next/cache";
 
 //Sign in the user with credentials
 export async function signInWithCredentials(
@@ -164,14 +165,14 @@ export async function updateProfile(user: UserProps) {
         id: currentUser.id,
       },
       data: {
-        name: user.name
-      }
+        name: user.name,
+      },
     });
 
     return {
       success: true,
-      message: "User updated successfully"
-    }
+      message: "User updated successfully",
+    };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
@@ -181,7 +182,7 @@ export async function updateProfile(user: UserProps) {
 export async function getAllUsers({
   limit = PAGE_SIZE,
   page,
-} : {
+}: {
   limit?: number;
   page: number;
 }) {
@@ -196,5 +197,24 @@ export async function getAllUsers({
   return {
     data,
     totalPages: Math.ceil(dataCount / limit),
+  };
+}
+
+//Delete a user
+export async function deleteUser(id: string) {
+  try {
+    await prisma.user.delete({ where: { id } });
+
+    revalidatePath("/admin/users");
+
+    return {
+      success: true,
+      message: "User deleted successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: formatError(error),
+    };
   }
 }
