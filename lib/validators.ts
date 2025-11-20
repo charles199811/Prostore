@@ -1,6 +1,7 @@
 import { date, z } from "zod";
 import { formatNumberWithDecimal } from "./utils";
 import { PAYMENT_METHODS } from "./constants";
+import { id } from "zod/v4/locales";
 
 const currency = z
   .string()
@@ -119,11 +120,17 @@ export const paymentResultSchema = z.object({
 
 //Schema for updating the user profile
 export const updateProfileSchema = z.object({
-  name: z.string().min(3, "Name must be at least 3 characters"),
-  email: z.string().min(3, "Email must be at least 3 characters"),
+  name: z.string().min(3, "Name must be at least 3 characters").nullable(),
+  email: z.string().min(3, "Email must be at least 3 characters").nullable(),
 });
 
 //Schema for updating products
 export const updateProductSchema = insterProductSchema.extend({
   id: z.string().min(1, "Id is required"),
-})
+});
+
+//Schema to update users
+export const updateUserSchema = updateProfileSchema.extend({
+  id: z.string().min(1, "Id is required"),
+  role: z.string().min(1, "Role is required"),
+});

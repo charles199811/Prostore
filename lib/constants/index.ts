@@ -47,4 +47,6 @@ export const productDefualtValues = {
   numReviews: "0",
   isFeatured: false,
   banner: null,
-}
+};
+
+export const USER_ROLES = ["admin", "user"];
