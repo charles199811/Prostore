@@ -7,7 +7,7 @@ const Charts = ({
   data: { salesData: { month: string; totalSales: number }[] };
 }) => {
   return (
-    <div className="w-full h-72">
+    < div className="w-full h-72">
       <ResponsiveContainer width="100%" height="100%">
       <BarChart data={salesData}>
         <XAxis
