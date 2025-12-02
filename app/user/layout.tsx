@@ -23,6 +23,7 @@ export default function AdminLayout({
                 alt={APP_NAME}
               />
             </Link>
+            
             <MainNav className="mx-6" />
             <div className="ml-auto items-center flex space-x-4">
               <Menu />
