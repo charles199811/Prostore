@@ -7,6 +7,7 @@ import {
   insertOrderSchema,
   insertOrderItemSchema,
   paymentResultSchema,
+  insertReviewSchema,
 } from "@/lib/validators";
 import { Rationale } from "next/font/google";
 
@@ -32,3 +33,9 @@ export type Order = z.infer<typeof insertOrderSchema> & {
   user: { name: string | null; email: string };
 };
 export type PaymentResult = z.infer<typeof paymentResultSchema>;
+
+export type Review = z.infer<typeof insertReviewSchema> & {
+  id: string; 
+  createdAt: Date;
+  user?: { name: string };
+};

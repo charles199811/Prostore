@@ -30,6 +30,7 @@ model Product {
   banner      String?
   createdAt   DateTime    @default(now()) @db.Timestamp(6)
   OrderItem   OrderItem[]
+  reviews     Reviews[]
 }
 
 model User {
@@ -48,6 +49,7 @@ model User {
   session       Session[]
   Cart          Cart[]
   Order         Order[]
+  reviews       Reviews[]
 }
 
 model Account {
@@ -133,4 +135,17 @@ model OrderItem {
 
   //combine the order id and product id and creade a new UUID(primary_key)
   @@id([orderId, productId], map: "orderitems_orderId_ProdcutId_pk")
+}
+
+model Reviews {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId              String   @db.Uuid
+  productId           String   @db.Uuid
+  rating              Int
+  title               String
+  description         String
+  isVerifiedPuruchase Boolean  @default(true)
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  product             Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
