@@ -26,12 +26,13 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { createUpdateReview } from "@/lib/actions/review.action";
 import { reviewForDefaultValues } from "@/lib/constants";
 import { insertReviewSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StarIcon } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 
 const ReviewForm = ({
@@ -41,7 +42,7 @@ const ReviewForm = ({
 }: {
   userId: string;
   productId: string;
-  onReviewSubmitted?: () => void;
+  onReviewSubmitted: () => void;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -52,8 +53,34 @@ const ReviewForm = ({
     defaultValues: reviewForDefaultValues,
   });
 
+  //Open form handler
   const handleOpenForm = () => {
+    form.setValue("productId", productId);
+    form.setValue("userId", userId);
+
     setOpen(true);
+  };
+
+  //Submit form handler
+  const onSubmit: SubmitHandler<z.infer<typeof insertReviewSchema>> = async (
+    values
+  ) => {
+    const res = await createUpdateReview({ ...values, productId });
+
+    if (!res.success) {
+      return toast({
+        variant: "destructive",
+        description: res.message,
+      });
+    }
+
+    setOpen(false);
+
+    onReviewSubmitted();
+
+    toast({
+      description: res.message,
+    });
   };
 
   return (
@@ -63,7 +90,7 @@ const ReviewForm = ({
       </Button>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
-          <form method="post">
+          <form method="post" onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
               <DialogTitle>Write a review</DialogTitle>
               <DialogDescription>
@@ -98,7 +125,7 @@ const ReviewForm = ({
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue  />
+                            <SelectValue />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>

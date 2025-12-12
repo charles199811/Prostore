@@ -5,7 +5,6 @@ import { insertReviewSchema } from "../validators";
 import { formatError } from "../utils";
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
-import { tr } from "zod/v4/locales";
 import { revalidatePath } from "next/cache";
 
 //Create & Update reviews
@@ -85,4 +84,42 @@ export async function createUpdateReview(
       message: formatError(error),
     };
   }
+}
+
+//Get all reviews for a product
+export async function getReviews({ productId }: { productId: string }) {
+  const data = await prisma.reviews.findMany({
+    where: {
+      productId: productId,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return { data };
+}
+
+//Get a review written by the current user
+export async function getReviewByProductId({
+  productId,
+}: {
+  productId: string;
+}) {
+  const session = await auth();
+  if (!session) throw new Error("User is not authenticated");
+
+  return await prisma.reviews.findFirst({
+    where: {
+      productId,
+      userId: session?.user?.id,
+    },
+  });
 }

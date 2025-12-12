@@ -5,27 +5,44 @@ import Link from "next/link";
 import { useState } from "react";
 import ReviewForm from "./review-form";
 
-const ReviewList = ({ userId, productId, productSlug }: {
-    userId: string;
-    productId: string;
-    productSlug: string;
+const ReviewList = ({
+  userId,
+  productId,
+  productSlug,
+}: {
+  userId: string;
+  productId: string;
+  productSlug: string;
 }) => {
-    const [reviews, setReviews] = useState<Review[]>([])
-    return ( <div className="space-y-4">
-        {reviews.length === 0 && <div>No review yet</div>}
-        {
-        userId ? (
-            <ReviewForm userId={userId} productId={productId} />
-        ) : (
-            <div>
-                Please<Link className="text-blue-700 px-2" href={`/sign-in?callbackUrl=/product${productSlug}`}>
-                    Sign in
-                </Link>
-                to write a review
-            </div>
-        )}
-        <div className="flex felx-col gap-3">{/*Reviews Here*/}</div>
-    </div> );
-}
- 
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  const reload = () => {
+    console.log("Review Submitted")
+  }
+  return (
+    <div className="space-y-4">
+      {reviews.length === 0 && <div>No review yet</div>}
+      {userId ? (
+        <ReviewForm
+          userId={userId}
+          productId={productId}
+          onReviewSubmitted={reload}
+        />
+      ) : (
+        <div>
+          Please
+          <Link
+            className="text-blue-700 px-2"
+            href={`/sign-in?callbackUrl=/product${productSlug}`}
+          >
+            Sign in
+          </Link>
+          to write a review
+        </div>
+      )}
+      <div className="flex felx-col gap-3">{/*Reviews Here*/}</div>
+    </div>
+  );
+};
+
 export default ReviewList;
